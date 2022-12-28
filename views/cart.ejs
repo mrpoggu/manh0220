@@ -1,0 +1,40 @@
+<%- include('partials/header.ejs') %>
+<div class="container">
+  <h2>Your cart:</h2>
+  <ul>
+    <small style="font-style: italic; opacity: 0.6"
+      >*Change the quantity to 0 to delete item</small
+    >
+    <% products.forEach(product =>{%>
+    <form action="/cart/edit/<%=product.productId%> " method="POST">
+      <li>
+        Product name:<input
+          type="text"
+          name="name"
+          value="<%=product.name%>"
+          disabled
+        />
+        || Quantity:
+        <input type="text" name="quantity" value="<%=product.quantity%>" />
+        <input
+          type="text"
+          name="productId"
+          value="<%=product.productId%>"
+          hidden
+        />
+        <input type="text" name="price" value="<%=product.price%>" hidden />
+        || Price: $<%=product.price%> / product
+        <button class="btn btn-primary" type="submit">Change quantity</button>
+      </li>
+    </form>
+    <% }) %>
+    <h4>Total = $<%=total%></h4>
+    <form action="/cart/submit-order" method="POST">
+      <input type="text" value="<%=cart._id%>" hidden name="cartId" />
+      <button type="submit" class="btn btn-success btn-block">
+        Submit Order
+      </button>
+    </form>
+  </ul>
+</div>
+<%-include('partials/footer.ejs') %>
